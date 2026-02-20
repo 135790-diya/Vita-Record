@@ -1,0 +1,56 @@
+{% extends 'core/base.html' %}
+{% block title %}My Dashboard{% endblock %}
+{% block content %}
+<div class='row'>
+  <div class='col-md-4'>
+    <div class='card shadow-sm mb-4'>
+      <div class='card-header card-header-blue'>
+        <h5 class='mb-0'><i class='bi bi-person-badge me-2'></i>My ID Card</h5>
+      </div>
+      <div class='card-body text-center py-4'>
+        <p class='text-muted mb-2'>Your Unique Patient ID</p>
+        <div class='unique-id-badge'>{{ request.user.unique_id }}</div>
+        <p class='text-muted small mt-3'>
+          Share this ID with your doctor to access your records.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class='col-md-8'>
+    <div class='card shadow-sm'>
+      <div class='card-header card-header-blue'>
+        <h5 class='mb-0'><i class='bi bi-journal-medical me-2'></i>Medical History</h5>
+      </div>
+      <div class='card-body p-0'>
+        {% if records %}
+        <table class='table table-hover mb-0'>
+          <thead class='table-light'>
+            <tr>
+              <th>Date</th><th>Doctor</th>
+              <th>Diagnosis</th><th>Medications</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for rec in records %}
+            <tr>
+              <td>{{ rec.created_at|date:'M d, Y' }}</td>
+              <td>Dr. {{ rec.doctor.get_full_name }}</td>
+              <td>{{ rec.diagnosis }}</td>
+              <td><span class='badge bg-info text-dark'>
+                {{ rec.medications }}</span>
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+          <div class='text-center py-5 text-muted'>
+            <i class='bi bi-inbox fs-1 d-block mb-2'></i>
+            No medical records yet.
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
