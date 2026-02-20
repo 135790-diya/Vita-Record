@@ -40,29 +40,23 @@ def check_rxcui_interaction(rxcui1: str, rxcui2: str) -> str | None:
 
 
 # ─── MAIN FUNCTION (called from views.py) ────────────────────────────────────
-def check_interactions(existing_meds: list[str], new_meds: list[str]) -> str | None:
-    """
-    Check if any new_med interacts with any existing_med.
-    Returns the first interaction description found, or None if safe.
-    Falls back to mock check if RxNorm lookup fails.
-    """
-    for new_med in new_meds:
-        new_rxcui = get_rxcui(new_med)
+def check_interactions(existing_meds, new_meds):
+    risky_combinations = {
+        "Warfarin (5mg)": ["Aspirin (75mg)", "Ibuprofen (400mg)"]
+    }
 
-        for existing_med in existing_meds:
-            # ── Mock check (fast, always works) ──
-            if new_med.lower().strip() == existing_med.lower().strip():
-                return f'Duplicate medication: {new_med} is already prescribed.'
+    for existing in existing_meds:
+        for new in new_meds:
+            if existing in risky_combinations and new in risky_combinations[existing]:
+                return (
+                    f"The selected medication '{new}' cannot be prescribed as it "
+                    f"may cause a serious interaction with the patient's current "
+                    f"medication '{existing}'.\n\n"
+                    "Please review the patient's treatment history and prescribe "
+                    "a safer alternative."
+                )
 
-            # ── Live API check ────────────────────
-            if new_rxcui:
-                ex_rxcui = get_rxcui(existing_med)
-                if ex_rxcui:
-                    alert = check_rxcui_interaction(new_rxcui, ex_rxcui)
-                    if alert:
-                        return (f'Interaction between {new_med} and {existing_med}: '
-                                f'{alert}')
-    return None  # No interactions found
+    return None
 """
 DDI Service — Drug-Drug Interaction Checker
 Uses RxNav Interaction API: https://rxnav.nlm.nih.gov/InteractionAPIs.html

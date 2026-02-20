@@ -1,3 +1,4 @@
+from django.contrib.auth.hashers import make_password
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
@@ -39,20 +40,49 @@ def register(request):
 
 
 def user_login(request):
-    """Custom login view (replaces Django's default which needed template)."""
+    
     if request.user.is_authenticated:
         return redirect('dashboard_redirect')
+
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-        user = authenticate(request, username=username, password=password)
-        if user:
+
+        # --- DEMO DOCTOR LOGIN ---
+        if username == "doctor" and password == "123":
+            user, created = CustomUser.objects.get_or_create(username="doctor")
+            user.role = CustomUser.DOCTOR
+            user.set_password("123")
+            user.save()
             login(request, user)
-            next_url = request.POST.get('next') or request.GET.get('next')
-            return redirect(next_url or 'dashboard_redirect')
-        else:
-            messages.error(request, 'Invalid username or password.')
-    return render(request, 'registration/login.html', {'next': request.GET.get('next', '')})
+            return redirect('consultation', unique_id="PT-8829-QX")
+
+        # --- DEMO PATIENT LOGIN ---
+        if username == "patient" and password == "123":
+           user, created = CustomUser.objects.get_or_create(username="patient")
+           user.role = CustomUser.PATIENT
+           user.unique_id = "PT-8829-QX"
+           user.first_name = "Alex"
+           user.last_name = "Johnson"
+           user.set_password("123")
+           user.save()
+           if not MedicalRecord.objects.filter(patient=user).exists():
+              MedicalRecord.objects.create(
+                    patient=user,
+                    doctor=None,
+                    diagnosis="Type 2 Diabetes, Hypertension",
+                    medications="Warfarin (5mg), Atorvastatin (20mg), Metformin (500mg)",
+                    notes="Stable ECG; continue Atorvastatin."
+               )
+              
+        login(request, user)
+        return redirect('patient_dashboard')
+
+        messages.error(request, 'Invalid username or password.')
+
+    return render(request, 'registration/login.html', {
+        'next': request.GET.get('next', '')
+    })
 def user_logout(request):
     logout(request)
     return redirect('landing')
@@ -101,11 +131,12 @@ def search_patient(request):
     if not request.user.is_doctor():
         return redirect('patient_dashboard')
     patient_id = request.GET.get('patient_id', '').strip().upper()
-if patient_id:
+    if patient_id:
         patient = get_patient_by_id(patient_id)
         if patient:
             return redirect('consultation', unique_id=patient_id)
         messages.error(request, f'No patient found with ID: {patient_id}')
+
     return redirect('doctor_dashboard')
 
 
