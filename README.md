@@ -13,7 +13,7 @@
 - Member 2: Diya Thresia Daniel - Sree Buddha College of Engineering
 
 ### Hosted Project Link
-[\[mention your project hosted link here\]](https://meditrack-qaf6.onrender.com/)
+[\[https://meditrack-qaf6.onrender.com/]](https://meditrack-qaf6.onrender.com/)
 
 ### Project Description
 The project is a Django-based medical history tracking web app with doctor and patient logins. It shows patient medical records and allows doctors to add consultations with a drug interaction checker, deployed on Render.
@@ -114,7 +114,7 @@ Then open `http://127.0.0.1:8000` in your browser.
 ## Project Demo
 
 ### Video
-[[Add your demo video link here - YouTube, Google Drive, etc.](https://drive.google.com/drive/folders/1djgYzY2Ok_U8UMoFY1pxaFbsnaq1x-Na?usp=sharing)]
+[[https://drive.google.com/drive/folders/1djgYzY2Ok_U8UMoFY1pxaFbsnaq1x-Na?usp=sharing](https://drive.google.com/drive/folders/1djgYzY2Ok_U8UMoFY1pxaFbsnaq1x-Na?usp=sharing)]
 
 *Explain what the video demonstrates - key features, user flow, technical highlights*
 
