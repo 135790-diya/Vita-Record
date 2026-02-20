@@ -1,3 +1,8 @@
 django>=4.2
+psycopg2-binary>=2.9        # PostgreSQL driver
+dj-database-url>=2.0        # parse DATABASE_URL env var
+gunicorn>=21.0              # production WSGI server
+whitenoise>=6.6             # serve static files in production
 requests>=2.28
 python-dotenv>=1.0
+

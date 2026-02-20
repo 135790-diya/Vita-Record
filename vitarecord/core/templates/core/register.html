@@ -1,0 +1,68 @@
+{% extends 'core/base.html' %}
+{% block title %}Register — MediTrack{% endblock %}
+{% block content %}
+<div class='row justify-content-center mt-4'>
+  <div class='col-md-6'>
+    <div class='card shadow border-0'>
+<div class='card-header text-white text-center py-3' style='background:#1E3A5F'>
+        <h4 class='mb-0'><i class='bi bi-person-plus-fill me-2'></i>Create Account</h4>
+      </div>
+      <div class='card-body p-4'>
+        <form method='POST'>
+          {% csrf_token %}
+          <div class='row mb-3'>
+            <div class='col'>
+              <label class='form-label fw-semibold'>First Name</label>
+              {{ form.first_name }}
+            </div>
+            <div class='col'>
+              <label class='form-label fw-semibold'>Last Name</label>
+              {{ form.last_name }}
+            </div>
+          </div>
+          <div class='mb-3'>
+            <label class='form-label fw-semibold'>Email</label>
+            {{ form.email }}
+          </div>
+          <div class='mb-3'>
+            <label class='form-label fw-semibold'>Username</label>
+            {{ form.username }}
+          </div>
+          <div class='mb-3'>
+            <label class='form-label fw-semibold'>I am a...</label>
+            {{ form.role }}
+          </div>
+          <div class='mb-3'>
+            <label class='form-label fw-semibold'>Password</label>
+            {{ form.password1 }}
+          </div>
+          <div class='mb-3'>
+            <label class='form-label fw-semibold'>Confirm Password</label>
+            {{ form.password2 }}
+          </div>
+          {% if form.errors %}
+            <div class='alert alert-danger'>
+              {% for field in form %}{% for err in field.errors %}
+                <div>{{ field.label }}: {{ err }}</div>
+              {% endfor %}{% endfor %}
+              {% for err in form.non_field_errors %}
+                <div>{{ err }}</div>
+              {% endfor %}
+            </div>
+          {% endif %}
+          <div class='d-grid mt-4'>
+            <button type='submit' class='btn btn-primary btn-lg'>
+              <i class='bi bi-person-check-fill me-2'></i>Create Account
+            </button>
+          </div>
+        </form>
+        <hr>
+        <p class='text-center text-muted mb-0'>
+          Already have an account? <a href='{% url "login" %}'>Login</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

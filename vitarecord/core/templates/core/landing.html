@@ -5,19 +5,17 @@
   <div class='col-md-8 text-center'>
     <i class='bi bi-heart-pulse-fill text-primary' style='font-size:4rem'></i>
     <h1 class='fw-bold mt-3'>Welcome to MediTrack</h1>
-    <p class='lead text-muted mb-5'>
-      Secure, organized medical history at your fingertips.
-    </p>
+    <p class='lead text-muted mb-5'>Secure, organized medical history at your fingertips.</p>
     <div class='row g-4 justify-content-center'>
       <div class='col-md-5'>
         <div class='card shadow-sm border-0 p-4 h-100'>
           <i class='bi bi-person-fill text-primary mb-3' style='font-size:2.5rem'></i>
           <h4>I am a Patient</h4>
           <p class='text-muted'>View your medical history and unique ID.</p>
-          <a href='/login/?next=/patient/dashboard/'
-             class='btn btn-primary mt-auto'>
-            Patient Login
-          </a>
+          <div class='mt-auto d-grid gap-2'>
+            <a href='{% url "register" %}?role=patient' class='btn btn-primary'>Register</a>
+            <a href='{% url "login" %}?next=/patient/dashboard/' class='btn btn-outline-primary'>Login</a>
+          </div>
         </div>
       </div>
       <div class='col-md-5'>
@@ -25,8 +23,10 @@
           <i class='bi bi-clipboard2-pulse-fill text-success mb-3' style='font-size:2.5rem'></i>
           <h4>I am a Doctor</h4>
           <p class='text-muted'>Search patients, view & add records.</p>
-          <a href='/login/?next=/doctor/dashboard/'
-             class='btn btn-success mt-auto'>Doctor Login</a>
+          <div class='mt-auto d-grid gap-2'>
+            <a href='{% url "register" %}?role=doctor' class='btn btn-success'>Register</a>
+            <a href='{% url "login" %}?next=/doctor/dashboard/' class='btn btn-outline-success'>Login</a>
+          </div>
         </div>
       </div>
     </div>
