@@ -88,8 +88,9 @@ python manage.py runserver
 Then open `http://127.0.0.1:8000` in your browser.
 
 **Demo credentials:**
-- Patient → `jane.doe` / `patient123`
-- Doctor → `dr.smith` / `doctor123`
+
+- Patient → username : patient / password : 123
+- Doctor → username : doctor/ password : 123
 ## Project Documentation
 
 ### For Software:
@@ -110,7 +111,14 @@ Then open `http://127.0.0.1:8000` in your browser.
 
 ![Screenshot3](assets/login.png)
 *LOGIN PAGE*
+## Project Demo
 
+### Video
+[[Add your demo video link here - YouTube, Google Drive, etc.](https://drive.google.com/drive/folders/1djgYzY2Ok_U8UMoFY1pxaFbsnaq1x-Na?usp=sharing)]
+
+*Explain what the video demonstrates - key features, user flow, technical highlights*
+
+---
 
 ## Team Contributions
 
